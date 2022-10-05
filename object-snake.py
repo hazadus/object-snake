@@ -1,25 +1,15 @@
-import pygame
+from game import Game
+from engine import Engine
 
 
-class SnakeBlock:
-    # x
-    # y
-    # is_head
-    pass
-
-
-class Snake:
-    # length
-    # blocks list
-    # head
-    # speed
-    # direction
-    #
-    # move()
-    # change_direction()
-    # grow()
-    pass
-
+# Engine - renders game objects
+#
+# Game                  - score, level
+#   Board               - size, borders | spawn snake & food, check collisions -> move snake
+#       Food            - x, y
+#       Snake           - blocks, direction, head | eat, grow, move (w/o collision check)
+#                       - represent snake as 'tree'
+#           SnakeBlock  - x, y, is_head?
 
 class Food:
     # x
@@ -27,48 +17,10 @@ class Food:
     pass
 
 
-class Game:
-    is_gameover = False
-    score = 0
-    level = 1
-
-    # score_up()
-    # hiscore, or high scores table
-    def __init__(self, board_width: int, board_height: int):
-        """
-        :param board_width: ширина игрового поля (в блоках)
-        :param board_height: высота игрового поля (в блоках)
-        """
-        self.board_width = board_width
-        self.board_height = board_height
-
-    def game_over(self):
-        self.is_gameover = True
-
-
-class Engine:
-    def __init__(self, window_width: int, window_height: int, window_caption: str):
-        pygame.init()
-        self.display = pygame.display.set_mode((window_width, window_height))
-        pygame.display.set_caption(window_caption)
-
-    def quit(self):
-        pygame.quit()
-        quit()
-
-    def update(self):
-        pygame.display.update()
-
-
 if __name__ == '__main__':
-    engine = Engine(600, 600, 'Object Snake')
-    game = Game(60, 60)
+    the_game = Game(60, 60)
+    engine = Engine(600, 600, 'Objective Snake')
 
-    while not game.is_gameover:
-        for event in pygame.event.get():
-            print(event)
-            if event.type == pygame.QUIT:
-                game.game_over()
+    engine.game_loop(the_game)
 
-    engine.update()
     engine.quit()

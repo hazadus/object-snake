@@ -43,6 +43,12 @@ class Engine:
                           self.window_height - self.game.board.food.y * self.block_size,
                           self.block_size, self.block_size])
 
+        # show score
+        font_style = pygame.font.SysFont("bahnschrift", 25)
+        score = font_style.render(f'Ваш счёт: {str(self.game.score)} Длина питона: {len(self.game.board.snake.blocks)}',
+                                  True, self.black)
+        self.display.blit(score, [0, 0])
+
         pygame.display.update()
         self.clock.tick(self.speed)
 

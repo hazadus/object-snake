@@ -22,20 +22,25 @@ class Board:
                            if not Block(i, j) in self.snake.blocks]
         self.food = random.choice(all_free_blocks)
 
-    def make_move(self):
+    def make_move(self) -> bool:
         """
         Проверяет возможные коллизии и даёт команды змейке на движение, поедание еды.
-        :return:
+        :return: True если змейка поела
         """
         # TODO: check for collisions with walls or tail
         next_x, next_y = self.snake.predict_head_position()
         next_x %= self.width
         next_y %= self.height
         next_block = Block(next_x, next_y)
+
         if self.food == next_block:
+            self.snake.move_to(next_x, next_y)
             self.snake.eat(self.food)
             self.respawn_food()
-        self.snake.move_to(next_x, next_y)
+            return True
+        else:
+            self.snake.move_to(next_x, next_y)
+            return False
 
 
 class Game:
@@ -58,7 +63,8 @@ class Game:
 
     def make_move(self):
         if not self.is_paused:
-            self.board.make_move()
+            if self.board.make_move():
+                self.score += 10
 
     def toggle_pause(self):
         self.is_paused = not self.is_paused

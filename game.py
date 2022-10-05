@@ -1,14 +1,10 @@
 import random
 
 from snake import Snake
-from food import Food
+from blocks import Block
 
 
 class Board:
-    # spawn food()
-    # food
-    # move snake (check collision) - ?
-    # move snake here?
     def __init__(self, board_width: int, board_height: int):
         self.food = None
         self.snake = None
@@ -17,22 +13,29 @@ class Board:
         self.respawn_food()
 
     def respawn_snake(self):
-        self.snake = Snake(int(self.width/2),
-                           int(self.height/2))
+        self.snake = Snake(int(self.width / 2),
+                           int(self.height / 2))
 
     def respawn_food(self):
-        # TODO: check if block is clear
-        self.food = Food(random.randint(0, self.width), random.randint(0, self.height))
+        all_free_blocks = [Block(i, j) for i in range(self.width)
+                           for j in range(self.height)
+                           if not Block(i, j) in self.snake.blocks]
+        self.food = random.choice(all_free_blocks)
 
     def make_move(self):
+        """
+        Проверяет возможные коллизии и даёт команды змейке на движение, поедание еды.
+        :return:
+        """
         # TODO: check for collisions with walls or tail
         next_x, next_y = self.snake.predict_head_position()
-        if self.food.x == next_x and self.food.y == next_y:
+        next_x %= self.width
+        next_y %= self.height
+        next_block = Block(next_x, next_y)
+        if self.food == next_block:
             self.snake.eat(self.food)
             self.respawn_food()
-            self.snake.make_move()
-        else:
-            self.snake.make_move()
+        self.snake.move_to(next_x, next_y)
 
 
 class Game:

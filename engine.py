@@ -10,7 +10,7 @@ class Engine:
     red = (255, 0, 0)
     green = (0, 255, 0)
     # размер одного блока в пикселях
-    block_size = 10
+    block_size = 20
     speed = 7
 
     def __init__(self, game: Game, window_caption: str):

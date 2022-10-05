@@ -11,16 +11,8 @@ from engine import Engine
 #                       - represent snake as 'tree'
 #           SnakeBlock  - x, y, is_head?
 
-class Food:
-    # x
-    # y
-    pass
-
 
 if __name__ == '__main__':
-    the_game = Game(60, 60)
-    engine = Engine(600, 600, 'Objective Snake')
-
-    engine.game_loop(the_game)
-
+    engine = Engine(Game(60, 60), 'Objective Snake')
+    engine.game_loop()
     engine.quit()

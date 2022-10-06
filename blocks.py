@@ -8,7 +8,7 @@ class Block:
 
 
 class Food(Block):
-    pass
+    points = 10
 
 
 class SnakeBlock(Block):

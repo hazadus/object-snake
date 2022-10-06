@@ -1,3 +1,5 @@
+import logging
+
 from blocks import Food, SnakeBlock
 
 
@@ -5,8 +7,8 @@ class Snake:
     blocks = []
     direction_right = (1, 0)
     direction_left = (-1, 0)
-    direction_up = (0, 1)
-    direction_down = (0, -1)
+    direction_up = (0, -1)
+    direction_down = (0, 1)
     direction_stopped = (0, 0)
     direction = direction_stopped
 
@@ -21,6 +23,7 @@ class Snake:
     def eat(self, food: Food):
         self.head.is_head = False
         new_head = SnakeBlock(food.x, food.y, True, self.head)
+        logging.info(f'Ate food at: ({food.x}, {food.y})')
         self.head = new_head
         self.blocks.append(new_head)
 

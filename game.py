@@ -1,7 +1,8 @@
 import random
+import logging
 
 from snake import Snake
-from blocks import Block
+from blocks import Block, Food
 
 
 class Board:
@@ -21,6 +22,7 @@ class Board:
                            for j in range(self.height)
                            if not Block(i, j) in self.snake.blocks]
         self.food = random.choice(all_free_blocks)
+        logging.info(f'New food at({self.food.x},{self.food.y})')
 
     def make_move(self) -> bool:
         """
@@ -64,7 +66,8 @@ class Game:
     def make_move(self):
         if not self.is_paused:
             if self.board.make_move():
-                self.score += 10
+                self.score += Food.points
+                logging.info(f'Score: {self.score}, snake length: {len(self.board.snake.blocks)}')
 
     def toggle_pause(self):
         self.is_paused = not self.is_paused

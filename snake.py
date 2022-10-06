@@ -10,7 +10,7 @@ class Snake:
     direction_up = (0, -1)
     direction_down = (0, 1)
     direction_stopped = (0, 0)
-    direction = direction_stopped
+    direction = direction_right
 
     def __init__(self, x, y):
         block = SnakeBlock(x, y, True)
@@ -26,6 +26,10 @@ class Snake:
         logging.info(f'Ate food at: ({food.x}, {food.y})')
         self.head = new_head
         self.blocks.append(new_head)
+
+    def kill(self):
+        while self.blocks:
+            self.blocks.pop()
 
     def move_to(self, new_x, new_y):
         """

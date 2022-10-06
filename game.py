@@ -68,6 +68,8 @@ class Game:
             if self.board.make_move():
                 self.score += Food.points
                 logging.info(f'Score: {self.score}, snake length: {len(self.board.snake.blocks)}')
+            if self.score >= self.level*100:
+                self.level += 1
 
     def toggle_pause(self):
         self.is_paused = not self.is_paused

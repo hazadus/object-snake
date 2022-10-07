@@ -40,11 +40,14 @@ class Engine:
         quit()
 
     def draw_frame(self):
+        font_logo_name = 'PT Mono'
+        font_info_line_name = 'PT Mono'
+        font_paused_name = 'Chalkboard'
         self.display.fill(self.color_background)
 
         if self.state == self.state_menu:
             # Menu - show 'logo'
-            font_logo = pygame.font.SysFont("PT Mono", 100)
+            font_logo = pygame.font.SysFont(font_logo_name, 100)
             str_logo = 'SNAKE'
             surf_logo = font_logo.render(str_logo, True, self.color_info_line_text)
             logo_width, logo_height = font_logo.size(str_logo)
@@ -69,7 +72,7 @@ class Engine:
             # Show info line at the top of the window
             # 1) draw rect for top info line
             pygame.draw.rect(self.display, self.color_top_info_line, [0, 0, self.window_width, self.margin_top])
-            font_info_line = pygame.font.SysFont("PT Mono", 20)
+            font_info_line = pygame.font.SysFont(font_info_line_name, 20)
             # 2) level
             str_level = f'LVL {self.game.level}'
             surf_level = font_info_line.render(str_level, True, self.color_info_line_text)
@@ -90,7 +93,7 @@ class Engine:
                                         int((self.margin_top - xy_height) / 2)])
             # 5) paused?
             if self.game.is_paused:
-                font_paused = pygame.font.SysFont("Chalkboard", 75)
+                font_paused = pygame.font.SysFont(font_paused_name, 75)
                 str_paused = '* PAUSE *'
                 surf_paused = font_paused.render(str_paused, True, self.red)
                 paused_width, paused_height = font_paused.size(str_paused)
@@ -99,7 +102,7 @@ class Engine:
 
         if self.state == self.state_gameover:
             # Game over screen
-            font_logo = pygame.font.SysFont("PT Mono", 60)
+            font_logo = pygame.font.SysFont(font_logo_name, 60)
             str_logo = 'Game Over!'
             surf_logo = font_logo.render(str_logo, True, self.red)
             logo_width, logo_height = font_logo.size(str_logo)
@@ -133,13 +136,17 @@ class Engine:
                 # GAME
                 elif self.state == self.state_game:
                     if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_RIGHT:
+                        if event.key == pygame.K_RIGHT or event.key == pygame.K_d \
+                                and self.game.board.snake.direction != Snake.direction_left:
                             self.game.board.snake.set_direction(Snake.direction_right)
-                        elif event.key == pygame.K_DOWN:
+                        elif event.key == pygame.K_DOWN or event.key == pygame.K_s \
+                                and self.game.board.snake.direction != Snake.direction_up:
                             self.game.board.snake.set_direction(Snake.direction_down)
-                        elif event.key == pygame.K_LEFT:
+                        elif event.key == pygame.K_LEFT or event.key == pygame.K_a \
+                                and self.game.board.snake.direction != Snake.direction_right:
                             self.game.board.snake.set_direction(Snake.direction_left)
-                        elif event.key == pygame.K_UP:
+                        elif event.key == pygame.K_UP or event.key == pygame.K_w \
+                                and self.game.board.snake.direction != Snake.direction_down:
                             self.game.board.snake.set_direction(Snake.direction_up)
                         elif event.key == pygame.K_SPACE:
                             self.game.toggle_pause()

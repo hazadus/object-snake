@@ -12,12 +12,13 @@ class Game:
     score = 0
     level = 1
 
-    def __init__(self, board_width: int, board_height: int):
+    def __init__(self, board_width: int, board_height: int, default_player_name: str):
         """
         :param board_width: ширина игрового поля (в блоках)
         :param board_height: высота игрового поля (в блоках)
         """
         self.board = Board(board_width, board_height)
+        self.default_player_name = default_player_name
         self.highscores = Highscores()
         self.reset()
 
@@ -51,7 +52,7 @@ class Game:
                 self.level += 1
 
             if not is_alive:
-                score = Score('Gamer', self.score)
+                score = Score(self.default_player_name, self.score)
                 self.highscores.add(score)
                 self.game_over()
                 logging.info('Game over!')

@@ -18,6 +18,6 @@ logging.basicConfig(
 logging.info('Hello')
 
 if __name__ == '__main__':
-    engine = Engine(Game(40, 40), 'Objective Snake')
+    engine = Engine('config.toml', 'Objective Snake')
     engine.game_loop()
     engine.quit()

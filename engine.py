@@ -2,6 +2,7 @@ import logging
 
 import pygame
 
+from config import Config
 from snake import Snake
 from game import Game
 
@@ -25,11 +26,15 @@ class Engine:
     block_size = 17  # размер одного блока в пикселях
     base_speed = 5
 
-    def __init__(self, game: Game, window_caption: str):
+    def __init__(self, config_file_path, window_caption: str):
+        config = Config(config_file_path)
+        self.block_size = config['block_size']
+
         pygame.init()
-        self.game = game
-        self.window_width = game.board.width * self.block_size
-        self.window_height = self.margin_top + game.board.height * self.block_size
+
+        self.game = Game(config['board_width'], config['board_height'], config['player_name'])
+        self.window_width = self.game.board.width * self.block_size
+        self.window_height = self.margin_top + self.game.board.height * self.block_size
         self.display = pygame.display.set_mode((self.window_width, self.window_height))
         pygame.display.set_caption(window_caption)
         self.clock = pygame.time.Clock()

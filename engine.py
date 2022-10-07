@@ -8,10 +8,7 @@ from game import Game
 
 class Engine:
     # States
-    state_menu = 1
-    state_game = 2
-    state_gameover = 3
-    state_enter_highscore = 4
+    state_menu, state_game, state_gameover, state_enter_highscore = range(4)
     state = state_menu
     # Colors
     white = (255, 255, 255)
@@ -150,7 +147,7 @@ class Engine:
                             self.state = self.state_gameover
 
             if self.state == self.state_game:
-                self.game.make_move()
+                self.game.make_turn()
                 if self.game.is_gameover:
                     self.state = self.state_gameover
 

@@ -152,6 +152,7 @@ class Engine:
                             self.game.toggle_pause()
                         elif event.key == pygame.K_ESCAPE:
                             self.state = self.state_gameover
+                            self.game.game_over()
 
             if self.state == self.state_game:
                 self.game.make_turn()

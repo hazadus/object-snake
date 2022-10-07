@@ -1,9 +1,11 @@
 import logging
 
 from board import Board
+from highscores import Highscores, Score
 
 
 class Game:
+    highscores = None
     is_gameover = False
     is_paused = False
     is_quit = False
@@ -16,6 +18,8 @@ class Game:
         :param board_height: высота игрового поля (в блоках)
         """
         self.board = Board(board_width, board_height)
+        self.highscores = Highscores()
+        self.reset()
 
     def reset(self):
         self.is_gameover = False
@@ -25,6 +29,7 @@ class Game:
         self.board.reset()
 
     def game_over(self):
+        self.highscores.save()
         self.is_gameover = True
 
     def quit(self):
@@ -46,6 +51,8 @@ class Game:
                 self.level += 1
 
             if not is_alive:
+                score = Score('Gamer', self.score)
+                self.highscores.add(score)
                 self.game_over()
                 logging.info('Game over!')
 

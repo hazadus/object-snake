@@ -3,28 +3,45 @@ import logging
 
 
 class Config:
+    """
+    Загружает конфигурацию из файла в формате TOML.
+
+    __defaults: словарь с настройками по умолчанию, используется при отсутствии файла конфигурации или отдельных
+                параметров в нём.
+
+    Args
+        full_file_path (str): полный путь к файлу конфигурации в формате TOML.
+    """
+    __defaults = {
+        'board_width': 40,
+        'board_height': 40,
+        'block_size': 17,
+        'player_name': 'hazadus'
+    }
+
     def __init__(self, full_file_path: str):
-        self.config_dict = None
+        self.__config_dict = None
+
         try:
             with open(full_file_path, "rb") as file:
-                self.config_dict = tomli.load(file)
+                self.__config_dict = tomli.load(file)
                 logging.info(f'Config loaded from "{full_file_path}".')
         except FileNotFoundError:
             logging.info(f'Can\'t load config from "{full_file_path}", using defaults.')
         except tomli.TOMLDecodeError:
             logging.info(f'Wrong file format - "{full_file_path}"! Using defaults.')
         finally:
-            if self.config_dict is None:
-                self.config_dict = dict()
-            # Check config and set to defaults if parameters are missing
-            if not self.config_dict.get('board_width'):
-                self.config_dict['board_width'] = 40
-            if not self.config_dict.get('board_height'):
-                self.config_dict['board_height'] = 40
-            if not self.config_dict.get('block_size'):
-                self.config_dict['block_size'] = 17
-            if not self.config_dict.get('player_name'):
-                self.config_dict['player_name'] = 'hazadus'
+            if self.__config_dict is None:
+                self.__config_dict = dict()
 
-    def __getitem__(self, item):
-        return self.config_dict.get(item)
+            for key in self.__defaults:
+                if not self.__config_dict.get(key):
+                    self.__config_dict[key] = self.__defaults[key]
+
+    def __getitem__(self, key):
+        """
+        Возвращает параметр конфигурации с использованием скобок [] с именем инстанса класса.
+        :param key: Ключ (параметр) настроек
+        :return: Значение параметра по указанному ключу
+        """
+        return self.__config_dict.get(key)

@@ -23,8 +23,8 @@ class Snake:
 
     def eat(self, food: Food):
         self.head.is_head = False
-        new_head = SnakeBlock(food.x, food.y, True, self.head)
-        logging.info(f'Ate food at: ({food.x}, {food.y})')
+        new_head = SnakeBlock(food.x(), food.y(), True, self.head)
+        logging.info(f'Ate food at: ({food.x()}, {food.y()})')
         self.head = new_head
         self.blocks.append(new_head)
 
@@ -39,23 +39,23 @@ class Snake:
         :param new_y:
         :return:
         """
-        prev_x = self.head.x
-        self.head.x = new_x
-        prev_y = self.head.y
-        self.head.y = new_y
+        prev_x = self.head.x()
+        self.head.set_x(new_x)
+        prev_y = self.head.y()
+        self.head.set_y(new_y)
 
         next_block = self.head.next_block
         while next_block is not None:
             curr_block = next_block
-            curr_block.x, prev_x = prev_x, curr_block.x
-            curr_block.y, prev_y = prev_y, curr_block.y
+            prev_x = curr_block.set_x(prev_x)
+            prev_y = curr_block.set_y(prev_y)
             next_block = curr_block.next_block
 
         self.__prev_direction = self.__direction
 
     def predict_head_position(self) -> tuple:
         dx, dy = self.__direction
-        return self.head.x + dx, self.head.y + dy
+        return self.head.x() + dx, self.head.y() + dy
 
     def get_prev_direction(self):
         return self.__prev_direction

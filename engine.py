@@ -64,14 +64,14 @@ class Engine:
             for block in self.game.board.snake.blocks:
                 pygame.draw.rect(self.display,
                                  self.red if block.is_head else self.blue,
-                                 [block.x * self.block_size,
-                                  self.margin_top + block.y * self.block_size,
+                                 [block.x() * self.block_size,
+                                  self.margin_top + block.y() * self.block_size,
                                   self.block_size, self.block_size])
 
             # Render food
             pygame.draw.rect(self.display, self.green,
-                             [self.game.board.food.x * self.block_size,
-                              self.margin_top + self.game.board.food.y * self.block_size,
+                             [self.game.board.food.x() * self.block_size,
+                              self.margin_top + self.game.board.food.y() * self.block_size,
                               self.block_size, self.block_size])
 
             # Show info line at the top of the window
@@ -91,7 +91,7 @@ class Engine:
             self.display.blit(surf_score, [int((self.window_width - score_width) / 2),
                                            int((self.margin_top - score_height) / 2)])
             # 4) head (x,y)
-            str_xy = f'(x:{self.game.board.snake.head.x}, y:{self.game.board.snake.head.y})'
+            str_xy = f'(x:{self.game.board.snake.head.x()}, y:{self.game.board.snake.head.y()})'
             surf_xy = font_info_line.render(str_xy, True, self.gray)
             xy_width, xy_height = font_info_line.size(str_xy)
             self.display.blit(surf_xy, [int(self.window_width / 3 * 2 + (self.window_width / 3 - xy_width) / 2),

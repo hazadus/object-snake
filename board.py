@@ -22,7 +22,7 @@ class Board:
     def respawn_food(self):
         all_free_blocks = [Block(i, j) for i in range(self.width)
                            for j in range(self.height)
-                           if not Block(i, j) in self.snake.blocks]
+                           if not Block(i, j) in self.snake.blocks()]
         self.food = Food(random.choice(all_free_blocks))
         logging.info(f'New food at({self.food.x()},{self.food.y()})')
 
@@ -45,10 +45,9 @@ class Board:
 
         if self.food == next_block:  # food met!
             self.snake.move_to(next_x, next_y)
-            add_points = self.food.points()
-            self.snake.eat(self.food)
+            add_points = self.snake.eat(self.food)  # self.food.points()
             self.respawn_food()
-        elif next_block in self.snake.blocks:  # collision with tail!
+        elif next_block in self.snake.blocks():  # collision with tail!
             is_alive = False
         else:
             self.snake.move_to(next_x, next_y)

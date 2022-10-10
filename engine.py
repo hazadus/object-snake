@@ -61,7 +61,7 @@ class Engine:
 
         if self.state == self.state_game or self.state == self.state_gameover:
             # Render snake
-            for block in self.game.board.snake.blocks:
+            for block in self.game.board.snake.blocks():
                 pygame.draw.rect(self.display,
                                  self.red if block.is_head() else self.blue,
                                  [block.x() * self.block_size,

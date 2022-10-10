@@ -44,12 +44,12 @@ class Snake:
         prev_y = self.head.y()
         self.head.set_y(new_y)
 
-        next_block = self.head.next_block
+        next_block = self.head.next_block()
         while next_block is not None:
             curr_block = next_block
             prev_x = curr_block.set_x(prev_x)
             prev_y = curr_block.set_y(prev_y)
-            next_block = curr_block.next_block
+            next_block = curr_block.next_block()
 
         self.__prev_direction = self.__direction
 

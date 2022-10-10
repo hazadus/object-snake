@@ -84,13 +84,44 @@ class SnakeBlock(Block):
     Описывает подвид блока – элемент змейки.
 
     Args:
-
+        x (int): координата x блока на поле (в блоках)
+        y (int): координата y блока на поле (в блоках)
+        is_head (bool): флаг, является ли данный блок головой змейки
+        next_block (Block): следующий блок в змейке
     """
     def __init__(self, x, y, is_head=False, next_block=None):
-        """
-        :param x: координата в блоках
-        :param y: координата в блоках
-        """
         Block.__init__(self, x, y)
-        self.is_head = is_head
-        self.next_block = next_block
+        self.__is_head = is_head
+        self.__next_block = next_block
+
+    def is_head(self) -> bool:
+        """
+        Возвращает True если блок является головой змейки, иначе False.
+
+        :return: __is_head
+        """
+        return self.__is_head
+
+    def set_as_head(self, is_head=True):
+        """
+        Устанавливает флаг головы змейки в передаваемое значение.
+
+        :param is_head: True - сделать головой змейки, False - наоборот.
+        """
+        self.__is_head = is_head
+
+    def next_block(self) -> Block:
+        """
+        Возвращает следующий блок в змейке.
+
+        :return: __next_block
+        """
+        return self.__next_block
+
+    def set_next_block(self, next_block: Block):
+        """
+        Устанавливает следующий блок в змейке.
+
+        :param next_block: Блок, который будет следующим.
+        """
+        self.__next_block = next_block

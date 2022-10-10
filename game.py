@@ -46,7 +46,7 @@ class Game:
             is_alive, add_points = self.board.make_move()
             self.score += add_points
             if add_points:
-                logging.info(f'Score: {self.score}, snake length: {len(self.board.snake)}')
+                logging.info(f'Score: {self.score}, snake length: {len(self.board.snake())}')
 
             if self.score >= self.level*100:
                 self.level += 1

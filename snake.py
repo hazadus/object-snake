@@ -23,6 +23,12 @@ class Snake:
     direction_up = (0, -1)
     direction_down = (0, 1)
     all_directions = tuple([direction_right, direction_left, direction_up, direction_down])
+    opposite_directions = tuple(
+        [
+            (direction_right, direction_left), (direction_left, direction_right),
+            (direction_up, direction_down), (direction_down, direction_up)
+        ]
+    )
 
     def __init__(self, x, y):
         self.__head = SnakeBlock(x=x, y=y, is_head=True)
@@ -64,14 +70,16 @@ class Snake:
 
     def set_direction(self, new_direction: tuple):
         """
-        Устанавливает передаваемое направление движения.
+        Устанавливает передаваемое направление движения, если оно не противоположно направлению в предыдущий ход -
+        змейка не может двигаться назад! В противном случае направление движения не меняется.
 
         :param new_direction: кортеж направления вида (dx, dy)
         :raise ValueError: если направление не является одним из описанных в Snake.all_directions
         """
         if new_direction not in self.all_directions:
             raise ValueError(f'Wrong direction passed - {new_direction}')
-        self.__direction = new_direction
+        if (new_direction, self.get_prev_direction()) not in self.opposite_directions:
+            self.__direction = new_direction
 
     def eat(self, food: Food) -> int:
         """

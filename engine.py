@@ -97,7 +97,7 @@ class Engine:
             self.display.blit(surf_xy, [int(self.window_width / 3 * 2 + (self.window_width / 3 - xy_width) / 2),
                                         int((self.margin_top - xy_height) / 2)])
             # 5) paused?
-            if self.game.is_paused:
+            if self.game.is_paused and not self.game.is_gameover:
                 font_paused = pygame.font.SysFont(font_paused_name, 75)
                 str_paused = '* PAUSE *'
                 surf_paused = font_paused.render(str_paused, True, self.red)
@@ -141,17 +141,17 @@ class Engine:
                 # GAME
                 elif self.state == self.state_game:
                     if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_RIGHT or event.key == pygame.K_d \
-                                and self.game.board.snake.direction != Snake.direction_left:
+                        if (event.key == pygame.K_RIGHT or event.key == pygame.K_d) \
+                                and self.game.board.snake.get_prev_direction() != Snake.direction_left:
                             self.game.board.snake.set_direction(Snake.direction_right)
-                        elif event.key == pygame.K_DOWN or event.key == pygame.K_s \
-                                and self.game.board.snake.direction != Snake.direction_up:
+                        elif (event.key == pygame.K_DOWN or event.key == pygame.K_s) \
+                                and self.game.board.snake.get_prev_direction() != Snake.direction_up:
                             self.game.board.snake.set_direction(Snake.direction_down)
-                        elif event.key == pygame.K_LEFT or event.key == pygame.K_a \
-                                and self.game.board.snake.direction != Snake.direction_right:
+                        elif (event.key == pygame.K_LEFT or event.key == pygame.K_a) \
+                                and self.game.board.snake.get_prev_direction() != Snake.direction_right:
                             self.game.board.snake.set_direction(Snake.direction_left)
-                        elif event.key == pygame.K_UP or event.key == pygame.K_w \
-                                and self.game.board.snake.direction != Snake.direction_down:
+                        elif (event.key == pygame.K_UP or event.key == pygame.K_w) \
+                                and self.game.board.snake.get_prev_direction() != Snake.direction_down:
                             self.game.board.snake.set_direction(Snake.direction_up)
                         elif event.key == pygame.K_SPACE:
                             self.game.toggle_pause()

@@ -4,21 +4,22 @@ from blocks import Food, SnakeBlock
 
 
 class Snake:
-    blocks = []
     direction_right = (1, 0)
     direction_left = (-1, 0)
     direction_up = (0, -1)
     direction_down = (0, 1)
     direction_stopped = (0, 0)
-    direction = direction_right
 
     def __init__(self, x, y):
         block = SnakeBlock(x, y, True)
         self.head = block
+        self.blocks = list()
         self.blocks.append(block)
+        self.__direction = self.__prev_direction = self.direction_right
 
     def set_direction(self, new_direction: tuple):
-        self.direction = new_direction
+        self.__prev_direction = self.__direction
+        self.__direction = new_direction
 
     def eat(self, food: Food):
         self.head.is_head = False
@@ -50,6 +51,11 @@ class Snake:
             curr_block.y, prev_y = prev_y, curr_block.y
             next_block = curr_block.next_block
 
+        self.__prev_direction = self.__direction
+
     def predict_head_position(self) -> tuple:
-        dx, dy = self.direction
+        dx, dy = self.__direction
         return self.head.x + dx, self.head.y + dy
+
+    def get_prev_direction(self):
+        return self.__prev_direction

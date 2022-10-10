@@ -1,7 +1,6 @@
 import sys
 import logging
 
-from game import Game
 from engine import Engine
 
 

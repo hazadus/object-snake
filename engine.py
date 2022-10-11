@@ -33,14 +33,15 @@ class Engine:
         pygame.init()
 
         self.game = Game(config['board_width'], config['board_height'], config['player_name'])
-        self.window_width = self.game.board.width * self.block_size
-        self.window_height = self.margin_top + self.game.board.height * self.block_size
+        self.window_width = self.game.board.width() * self.block_size
+        self.window_height = self.margin_top + self.game.board.height() * self.block_size
         self.display = pygame.display.set_mode((self.window_width, self.window_height))
         pygame.display.set_caption(window_caption)
         self.clock = pygame.time.Clock()
         logging.info(f'New game initialized: {window_caption}, {self.window_width}x{self.window_height}')
 
-    def quit(self):
+    @staticmethod
+    def quit():
         pygame.quit()
         quit()
 

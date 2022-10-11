@@ -110,7 +110,7 @@ class SnakeBlock(Block):
         """
         self.__is_head = is_head
 
-    def next_block(self) -> Block:
+    def next_block(self):
         """
         Возвращает следующий блок в змейке.
 
@@ -118,7 +118,7 @@ class SnakeBlock(Block):
         """
         return self.__next_block
 
-    def set_next_block(self, next_block: Block):
+    def set_next_block(self, next_block):
         """
         Устанавливает следующий блок в змейке.
 

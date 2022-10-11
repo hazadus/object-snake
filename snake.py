@@ -145,12 +145,3 @@ class Snake:
         :return: кортеж направления вида (dx, dy)
         """
         return self.__prev_direction
-
-    def can_set_direction(self, new_direction):
-        """
-        Проверить, может ли змейка двигаться в этом нарпавлении.
-
-        :param new_direction:
-        :return:
-        """
-        pass

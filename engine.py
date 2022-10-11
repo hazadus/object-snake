@@ -33,8 +33,8 @@ class Engine:
         pygame.init()
 
         self.game = Game(config['board_width'], config['board_height'], config['player_name'])
-        self.window_width = self.game.board.width() * self.block_size
-        self.window_height = self.margin_top + self.game.board.height() * self.block_size
+        self.window_width = self.game.board().width() * self.block_size
+        self.window_height = self.margin_top + self.game.board().height() * self.block_size
         self.display = pygame.display.set_mode((self.window_width, self.window_height))
         pygame.display.set_caption(window_caption)
         self.clock = pygame.time.Clock()
@@ -62,7 +62,7 @@ class Engine:
 
         if self.state == self.state_game or self.state == self.state_gameover:
             # Render snake
-            for block in self.game.board.snake().blocks():
+            for block in self.game.board().snake().blocks():
                 pygame.draw.rect(self.display,
                                  self.red if block.is_head() else self.blue,
                                  [block.x() * self.block_size,
@@ -71,8 +71,8 @@ class Engine:
 
             # Render food
             pygame.draw.rect(self.display, self.green,
-                             [self.game.board.food().x() * self.block_size,
-                              self.margin_top + self.game.board.food().y() * self.block_size,
+                             [self.game.board().food().x() * self.block_size,
+                              self.margin_top + self.game.board().food().y() * self.block_size,
                               self.block_size, self.block_size])
 
             # Show info line at the top of the window
@@ -92,7 +92,7 @@ class Engine:
             self.display.blit(surf_score, [int((self.window_width - score_width) / 2),
                                            int((self.margin_top - score_height) / 2)])
             # 4) head (x,y)
-            str_xy = f'(x:{self.game.board.snake().head().x()}, y:{self.game.board.snake().head().y()})'
+            str_xy = f'(x:{self.game.board().snake().head().x()}, y:{self.game.board().snake().head().y()})'
             surf_xy = font_info_line.render(str_xy, True, self.gray)
             xy_width, xy_height = font_info_line.size(str_xy)
             self.display.blit(surf_xy, [int(self.window_width / 3 * 2 + (self.window_width / 3 - xy_width) / 2),
@@ -143,13 +143,13 @@ class Engine:
                 elif self.state == self.state_game:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                            self.game.board.snake().set_direction(Snake.direction_right)
+                            self.game.board().snake().set_direction(Snake.direction_right)
                         elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                            self.game.board.snake().set_direction(Snake.direction_down)
+                            self.game.board().snake().set_direction(Snake.direction_down)
                         elif event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                            self.game.board.snake().set_direction(Snake.direction_left)
+                            self.game.board().snake().set_direction(Snake.direction_left)
                         elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                            self.game.board.snake().set_direction(Snake.direction_up)
+                            self.game.board().snake().set_direction(Snake.direction_up)
                         elif event.key == pygame.K_SPACE:
                             self.game.toggle_pause()
                         elif event.key == pygame.K_ESCAPE:

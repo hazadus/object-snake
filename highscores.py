@@ -35,8 +35,6 @@ class Highscores:
             with open(self.__highscores_filename, 'rb') as file:
                 self.__scores = pickle.load(file)
                 logging.info(f'Highscores loaded from "{self.__highscores_filename}".')
-                for i, score in enumerate(self.get()):
-                    logging.info(f'{i + 1}. {score}')
         except FileNotFoundError:
             logging.info(f'File "{self.__highscores_filename}" not found.')
 
@@ -48,3 +46,9 @@ class Highscores:
                 logging.info(f'Highscores saved to "{self.__highscores_filename}".')
         except:
             logging.info(f'An error has occured while trying to save to "{self.__highscores_filename}".')
+
+
+if __name__ == '__main__':
+    hs = Highscores()
+    for i, score in enumerate(hs.get()):
+        print(f'{i + 1}. {score}')

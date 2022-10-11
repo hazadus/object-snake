@@ -14,9 +14,6 @@ logging.basicConfig(
     datefmt='%d/%m/%Y %H:%M:%S',
     )
 
-logging.info('Hello')
-
-if __name__ == '__main__':
-    engine = Engine('config.toml', 'Objective Snake')
-    engine.game_loop()
-    engine.quit()
+engine = Engine('config.toml', 'Objective Snake')
+engine.game_loop()
+engine.quit()

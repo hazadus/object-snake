@@ -80,13 +80,13 @@ class Engine:
             pygame.draw.rect(self.display, self.color_top_info_line, [0, 0, self.window_width, self.margin_top])
             font_info_line = pygame.font.SysFont(font_info_line_name, 20)
             # 2) level
-            str_level = f'LVL {self.game.level}'
+            str_level = f'LVL {self.game.level()}'
             surf_level = font_info_line.render(str_level, True, self.color_info_line_text)
             level_width, level_height = font_info_line.size(str_level)
             self.display.blit(surf_level, [int((self.window_width / 3 - level_width) / 2),
                                            int((self.margin_top - level_height) / 2)])
             # 3) score
-            str_score = str(self.game.score)
+            str_score = str(self.game.score())
             surf_score = font_info_line.render(str_score, True, self.black)
             score_width, score_height = font_info_line.size(str_score)
             self.display.blit(surf_score, [int((self.window_width - score_width) / 2),
@@ -98,7 +98,7 @@ class Engine:
             self.display.blit(surf_xy, [int(self.window_width / 3 * 2 + (self.window_width / 3 - xy_width) / 2),
                                         int((self.margin_top - xy_height) / 2)])
             # 5) paused?
-            if self.game.is_paused and not self.game.is_gameover:
+            if self.game.is_paused() and not self.game.is_gameover():
                 font_paused = pygame.font.SysFont(font_paused_name, 75)
                 str_paused = '* PAUSE *'
                 surf_paused = font_paused.render(str_paused, True, self.red)
@@ -116,10 +116,10 @@ class Engine:
                                           int((self.window_height - logo_height) / 2)])
 
         pygame.display.update()
-        self.clock.tick(self.base_speed + self.game.level)
+        self.clock.tick(self.base_speed + self.game.level())
 
     def game_loop(self):
-        while not self.game.is_quit:
+        while not self.game.is_quit():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.game.quit()
@@ -158,7 +158,7 @@ class Engine:
 
             if self.state == self.state_game:
                 self.game.make_turn()
-                if self.game.is_gameover:
+                if self.game.is_gameover():
                     self.state = self.state_gameover
 
             self.draw_frame()

@@ -5,12 +5,15 @@ import pickle
 
 class Score:
     def __init__(self, name: str, score: int, date_added=datetime.now()):
-        self.name = name
-        self.score = score
+        self.__name = name
+        self.__score = score
         self.date_added = date_added
 
+    def score(self):
+        return self.__score
+
     def __repr__(self):
-        return f'{self.name} {self.score} {self.date_added.strftime("%d.%m.%Y %H:%M")}'
+        return f'{self.__name} {self.__score} {self.date_added.strftime("%d.%m.%Y %H:%M")}'
 
 
 class Highscores:
@@ -28,7 +31,7 @@ class Highscores:
         self.__scores.append(new_score)
 
     def get(self):
-        return sorted(self.__scores, key=lambda x: x.score, reverse=True)
+        return sorted(self.__scores, key=lambda x: x.score(), reverse=True)
 
     def load(self):
         try:
@@ -50,5 +53,5 @@ class Highscores:
 
 if __name__ == '__main__':
     hs = Highscores()
-    for i, score in enumerate(hs.get()):
-        print(f'{i + 1}. {score}')
+    for i, i_score in enumerate(hs.get()):
+        print(f'{i + 1}. {i_score}')

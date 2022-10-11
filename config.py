@@ -13,10 +13,17 @@ class Config:
         full_file_path (str): полный путь к файлу конфигурации в формате TOML.
     """
     __defaults = {
+        'log_filename': 'object-snake.log',
         'board_width': 40,
         'board_height': 40,
         'block_size': 17,
-        'player_name': 'hazadus'
+        'player_name': 'hazadus',
+        'window_caption': 'Objective Snake',
+        'margin_top': 25,
+        'base_speed': 5,
+        'font_logo_name': 'PT Mono',
+        'font_info_line_name': 'PT Mono',
+        'font_paused_name': 'Chalkboard'
     }
 
     def __init__(self, full_file_path: str):
@@ -37,6 +44,8 @@ class Config:
             for key in self.__defaults:
                 if not self.__config_dict.get(key):
                     self.__config_dict[key] = self.__defaults[key]
+                    logging.info(f'Key "{key}" missing in config "{full_file_path}", '
+                                 f'using default {key}="{self.__defaults[key]}"')
 
     def __getitem__(self, key):
         """

@@ -1,3 +1,6 @@
+# Имя лог-файла
+log_filename = 'object-snake1.log'
+
 # Размер одного блока на игровом поле в пикселях
 block_size = 17
 
@@ -7,3 +10,17 @@ board_height = 40
 
 # Имя игрока по умолчанию (для таблицы рекордов)
 player_name = 'Hazadus'
+
+# Заголовок окна игры
+window_caption = 'Objective Snake'
+
+# Высота информационной строки в верху окна в пикселях
+margin_top = 25
+
+# Базовая скорость игры (больше цифра = быстрее)
+base_speed = 5
+
+# Шрифты
+font_logo_name = 'PT Mono'
+font_info_line_name = 'PT Mono'
+font_paused_name = 'Chalkboard'
